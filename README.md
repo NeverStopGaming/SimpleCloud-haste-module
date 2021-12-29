@@ -1,2 +1,2 @@
-# Gradle template
+# SimpleCloud haste module
  

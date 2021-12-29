@@ -23,15 +23,13 @@ object HasteCommand : ICommandHandler {
     ) {
 
         val player = sender as CloudPlayer
-        val logFile = File("/home/cloud/tmp/${service.getName()}/logs/latest.log")
+        val logFile = File("tmp/${service.getName()}/logs/latest.log")
         val haste = logFile.readText().haste()
         player.sendMessage(
-            CloudText("Haste: ${haste.url}").addClickEvent(
+            CloudText("§8>> §7Haste: §b${haste.url}").addClickEvent(
                 CloudText.ClickEventType.OPEN_URL,
                 haste.url.toString()
             )
         )
-        val path = File(".")
-        sender.sendMessage(path.absolutePath)
     }
 }

@@ -81,6 +81,7 @@ object Properties {
                 "api" to "eu.thesimplecloud.simplecloud:simplecloud-api:%version%",
                 "base" to "eu.thesimplecloud.simplecloud:simplecloud-base:%version%",
                 "plugin" to "eu.thesimplecloud.simplecloud:simplecloud-plugin:%version%",
+                "launcher" to "eu.thesimplecloud.simplecloud:simplecloud-launcher:%version%",
             )
             it["components"] = mutableMapOf(
                 "minimessage" to "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT",

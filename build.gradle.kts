@@ -39,10 +39,9 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    compileOnly(getDependency("simplecloud", "plugin"))
-    compileOnly(getDependency("nsg", "api"))
-    compileOnly(getDependency("nsg", "core"))
-    compileOnly(getDependency("components", "minimessage"))
+    compileOnly(getDependency("simplecloud", "api"))
+    compileOnly(getDependency("simplecloud", "base"))
+    compileOnly(getDependency("simplecloud", "launcher"))
 }
 
 tasks.test {
@@ -66,7 +65,7 @@ if (System.getProperty("publishName") != null && System.getProperty("publishPass
                 from(components["java"])
                 pom {
                     name.set(project.name)
-                    url.set("https://github.com/NeverStopGaming/Backend")
+                    url.set("https://github.com/NeverStopGaming/SimpleCloud-haste-module")
                     properties.put("inceptionYear", "2021")
                     licenses {
                         license {

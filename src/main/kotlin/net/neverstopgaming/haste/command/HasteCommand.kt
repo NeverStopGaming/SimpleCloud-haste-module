@@ -21,11 +21,16 @@ object HasteCommand : ICommandHandler {
         sender: ICommandSender,
         @CommandArgument("service", ServiceCommandSuggestionProvider::class) service: ICloudService
     ) {
-
-        val player = sender as CloudPlayer
+        
         val logFile = File("tmp/${service.getName()}/logs/latest.log")
         val haste = logFile.readText().haste()
-        player.sendMessage(
+
+        if (sender !is CloudPlayer) {
+            sender.sendMessage(haste.url.toString())
+            return
+        }
+
+        sender.sendMessage(
             CloudText("§8>> §7Haste: §b${haste.url}").addClickEvent(
                 CloudText.ClickEventType.OPEN_URL,
                 haste.url.toString()

@@ -17,7 +17,7 @@
 ## Installation
 
 <ol>
-    <li><a href="">Download the Jar file</a> or <a href="#Compile">Compile it yourself</a></li>
+    <li><a href="https://github.com/NeverStopGaming/SimpleCloud-haste-module/releases/download/v1.0/SimpleCloud-Haste-1.0.jar">Download the Jar file</a> or <a href="#Compile">Compile it yourself</a></li>
     <li>move the file to modules folder</li>
     <li>reload or restart your cloud</li>
     <li>Have fun debugging your crappy code :^)</li>

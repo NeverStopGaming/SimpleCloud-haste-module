@@ -1,4 +1,4 @@
-rootProject.name = "Template"
+rootProject.name = "SimpleCloud-Haste"
 
 //Repositorys for Plugins
 pluginManagement {

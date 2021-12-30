@@ -22,7 +22,8 @@ object HasteCommand : ICommandHandler {
         @CommandArgument("service", ServiceCommandSuggestionProvider::class) service: ICloudService
     ) {
         
-        val logFile = File("tmp/${service.getName()}/logs/latest.log")
+        val logFile =
+            if (!service.isStatic()) File("tmp/${service.getName()}/logs/latest.log") else File("static/${service.getName()}/logs/latest.log")
         val haste = logFile.readText().haste()
 
         if (sender !is CloudPlayer) {

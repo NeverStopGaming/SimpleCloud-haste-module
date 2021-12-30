@@ -21,7 +21,21 @@ object HasteCommand : ICommandHandler {
         sender: ICommandSender,
         @CommandArgument("service", ServiceCommandSuggestionProvider::class) service: ICloudService
     ) {
-        
+        haste(sender, service)
+    }
+
+    @CommandSubPath("current")
+    fun handle(sender: ICommandSender) {
+
+        if (sender !is CloudPlayer) {
+            sender.sendMessage("&cYou must be a player to use this command!")
+            return
+        }
+        sender.getConnectedServer()?.let { haste(sender, it) }
+    }
+
+    private fun haste(sender: ICommandSender, service: ICloudService) {
+
         val logFile =
             if (!service.isStatic()) File("tmp/${service.getName()}/logs/latest.log") else File("static/${service.getName()}/logs/latest.log")
         val haste = logFile.readText().haste()

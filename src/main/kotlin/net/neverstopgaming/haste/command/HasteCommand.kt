@@ -13,7 +13,7 @@ import eu.thesimplecloud.launcher.console.command.provider.ServiceCommandSuggest
 import net.neverstopgaming.haste.util.haste
 import java.io.File
 
-@Command("haste", CommandType.CONSOLE_AND_INGAME)
+@Command("haste", CommandType.CONSOLE_AND_INGAME, "cloud.haste", ["paste", "log"])
 object HasteCommand : ICommandHandler {
 
     @CommandSubPath("<service>")

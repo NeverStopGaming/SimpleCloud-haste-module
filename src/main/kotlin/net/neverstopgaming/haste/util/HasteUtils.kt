@@ -22,7 +22,7 @@ var gson = Gson()
 
 fun String.haste(hasteServer: String = "https://haste.neverstopgaming.net"): HasteResult {
     val request =
-        HttpRequest.newBuilder(URI("$hasteServer/documents")).POST(HttpRequest.BodyPublishers.ofString(this)).build()
+        HttpRequest.newBuilder(URI("$hasteServer/documents")).POST(HttpRequest.BodyPublishers.ofString(this.replace("^(?:25[0-5]|2[0-4]\\d|[0-1]?\\d{1,2})(?:\\.(?:25[0-5]|2[0-4]\\d|[0-1]?\\d{1,2})){3}\$".toRegex(), "IP"))).build()
     val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
     val key = gson.fromJson<HasteResponse>(response.body(), HasteResponse::class.java)?.key
         ?: throw IllegalStateException("Cannot parse Key from Haste Result")

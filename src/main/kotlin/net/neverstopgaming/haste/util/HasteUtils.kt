@@ -19,10 +19,10 @@ import java.net.http.HttpResponse
 val httpClient: HttpClient = HttpClient.newHttpClient()
 
 var gson = Gson()
-
+val IP_REGEX = "(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(:[0-9]{0,5})".toRegex()
 fun String.haste(hasteServer: String = "https://haste.neverstopgaming.net"): HasteResult {
     val request =
-        HttpRequest.newBuilder(URI("$hasteServer/documents")).POST(HttpRequest.BodyPublishers.ofString(this.replace("^(?:25[0-5]|2[0-4]\\d|[0-1]?\\d{1,2})(?:\\.(?:25[0-5]|2[0-4]\\d|[0-1]?\\d{1,2})){3}\$".toRegex(), "IP"))).build()
+        HttpRequest.newBuilder(URI("$hasteServer/documents")).POST(HttpRequest.BodyPublishers.ofString(this.replace(IP_REGEX, "IP"))).build()
     val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
     val key = gson.fromJson<HasteResponse>(response.body(), HasteResponse::class.java)?.key
         ?: throw IllegalStateException("Cannot parse Key from Haste Result")

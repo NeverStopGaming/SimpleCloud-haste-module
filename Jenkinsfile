@@ -49,8 +49,8 @@ pipeline {
                          remote.password = password
                     }
                 }
-                sshPut remote: remote, from: 'build/libs/ProxySystem-1.0.jar', into: "/home/cloud/templates/Proxy/plugins/"
-                sshCommand remote: remote, command: "screen -S SimpleCloud -X stuff 'leave\nshutdowngroup Proxy\n'"
+                sshPut remote: remote, from: 'build/libs/SimpleCloud-Haste-1.0.1.jar', into: "/home/cloud/modules/"
+                sshCommand remote: remote, command: "screen -S SimpleCloud -X stuff 'leave\nrl module SimpleCloud-Haste\n'"
             }
         }
     }

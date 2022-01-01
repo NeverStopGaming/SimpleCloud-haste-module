@@ -1,5 +1,5 @@
 {
-  "name": "SimpleCloud-Haste",
+  "name": "SimpleCloud-Haste-Module",
   "author": "Chaoten",
   "mainClass": "net.neverstopgaming.haste.HasteModule",
   "moduleCopyType": "NONE",

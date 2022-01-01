@@ -33,19 +33,27 @@ object Updater {
 
             val version = gson.fromJson(response.body(), UpdateResponse::class.java).version
 
-            if ("version" == pluginVersion) {
+            if (version != pluginVersion) {
 
                 Launcher.instance.logger.info("$pluginName is outdated! New version: $version (Current version: $pluginVersion)")
 
-                File("modules/$pluginName-$pluginVersion.jar").delete()
+                Launcher.instance.logger.info("$jenkinsServer/job/$pluginName/lastSuccessfulBuild/artifact/build/libs/$pluginName-$version.jar")
+                try {
+                    val inputStream =
+                        URL("$jenkinsServer/job/$pluginName/lastSuccessfulBuild/artifact/build/libs/$pluginName-$version.jar").openStream()
 
-                val inputStream =
-                    URL("$jenkinsServer/job/$pluginName/lastSuccessfulBuild/artifact/build/libs/$pluginName-$version.jar").openStream()
-                Files.copy(
-                    inputStream,
-                    Paths.get("modules/$pluginName-$version.jar"),
-                    StandardCopyOption.REPLACE_EXISTING
-                )
+                    Files.copy(
+                        inputStream,
+                        Paths.get("modules/$pluginName-$version.jar"),
+                        StandardCopyOption.REPLACE_EXISTING
+                    )
+
+                    File("modules/$pluginName-$pluginVersion.jar").delete()
+
+                } catch (e: Exception) {
+                    Launcher.instance.logger.log(Level.WARNING, "Failed to download new version of $pluginName", e)
+                }
+
             }
 
         } else {

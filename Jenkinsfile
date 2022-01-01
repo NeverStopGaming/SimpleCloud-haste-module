@@ -23,6 +23,11 @@ pipeline {
                     sh "./gradlew build --refresh-dependencies -DpublishPassword=$PASSWORD -DpublishName=$USERNAME"
                 }
             }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+                }
+            }
         }
     }
 }

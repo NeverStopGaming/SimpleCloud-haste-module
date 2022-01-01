@@ -18,7 +18,7 @@ buildscript {
 }
 
 group = "net.neverstopgaming"
-version = "1.0.1"
+version = "1.1"
 
 repositories {
     mavenCentral()

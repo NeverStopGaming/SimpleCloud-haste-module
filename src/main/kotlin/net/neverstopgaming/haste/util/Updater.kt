@@ -17,7 +17,6 @@ import java.util.logging.Level
 object Updater {
 
     private const val updateServer = "https://update.neverstopgaming.net"
-    private const val jenkinsServer = "https://ci.neverstopgaming.net"
 
     private val request =
         HttpRequest.newBuilder(URI("$updateServer/update?plugin=$pluginName")).GET().build()

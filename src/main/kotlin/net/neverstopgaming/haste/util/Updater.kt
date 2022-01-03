@@ -25,26 +25,26 @@ object Updater {
 
     data class UpdateResponse(
         val version: String,
+        val url: String
     )
 
     init {
 
         if (response.statusCode() == 200) {
 
-            val version = gson.fromJson(response.body(), UpdateResponse::class.java).version
+            val response = gson.fromJson(response.body(), UpdateResponse::class.java)
 
-            if (version != pluginVersion) {
+            if (response.version != pluginVersion) {
 
-                Launcher.instance.logger.info("$pluginName is outdated! New version: $version (Current version: $pluginVersion)")
+                Launcher.instance.logger.info("$pluginName is outdated! New version: ${response.version} (Current version: $pluginVersion)")
 
-                Launcher.instance.logger.info("$jenkinsServer/job/$pluginName/lastSuccessfulBuild/artifact/build/libs/$pluginName-$version.jar")
                 try {
                     val inputStream =
-                        URL("$jenkinsServer/job/$pluginName/lastSuccessfulBuild/artifact/build/libs/$pluginName-$version.jar").openStream()
+                        URL(response.url).openStream()
 
                     Files.copy(
                         inputStream,
-                        Paths.get("modules/$pluginName-$version.jar"),
+                        Paths.get("modules/$pluginName-${response.version}.jar"),
                         StandardCopyOption.REPLACE_EXISTING
                     )
 

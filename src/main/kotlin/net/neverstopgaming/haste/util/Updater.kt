@@ -49,6 +49,10 @@ object Updater {
 
                     File("modules/$pluginName-$pluginVersion.jar").delete()
 
+                    Launcher.instance.logger.info("$pluginName updated to version ${response.version}")
+
+                    Launcher.instance.executeCommand("reload modules $pluginName")
+
                 } catch (e: Exception) {
                     Launcher.instance.logger.log(Level.WARNING, "Failed to download new version of $pluginName", e)
                 }

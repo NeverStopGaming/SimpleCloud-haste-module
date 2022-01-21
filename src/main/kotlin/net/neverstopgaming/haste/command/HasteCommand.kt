@@ -10,8 +10,10 @@ import eu.thesimplecloud.launcher.console.command.annotations.Command
 import eu.thesimplecloud.launcher.console.command.annotations.CommandArgument
 import eu.thesimplecloud.launcher.console.command.annotations.CommandSubPath
 import eu.thesimplecloud.launcher.console.command.provider.ServiceCommandSuggestionProvider
+import eu.thesimplecloud.launcher.startup.Launcher
 import net.neverstopgaming.haste.util.haste
 import java.io.File
+import java.util.stream.Collectors
 
 @Command("haste", CommandType.CONSOLE_AND_INGAME, "cloud.haste", ["paste", "log"])
 object HasteCommand : ICommandHandler {
@@ -36,13 +38,18 @@ object HasteCommand : ICommandHandler {
 
     private fun haste(sender: ICommandSender, service: ICloudService) {
 
-        val logFile =
-            if (!service.isStatic()) File("tmp/${service.getName()}/logs/latest.log")
-            else File("static/${service.getName()}/logs/latest.log")
+        val screen = Launcher.instance.screenManager.getScreen(service.getName())
+        if(screen == null){
+            sender.sendMessage("Service screen is null")
+            return
+        }
+        val screenMessages = screen.getAllSavedMessages()
+        if(screenMessages.isEmpty()){
+            sender.sendMessage("Service screen is empty")
+            return
+        }
 
-
-        var msg = "Log file for ${service.getName()}: \n\n\n"
-        msg += logFile.readText()
+        var msg = screenMessages.parallelStream().collect(Collectors.joining("\n"))
 
         val haste = msg.haste()
 

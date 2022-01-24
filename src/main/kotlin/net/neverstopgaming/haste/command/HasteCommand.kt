@@ -10,9 +10,9 @@ import eu.thesimplecloud.launcher.console.command.annotations.Command
 import eu.thesimplecloud.launcher.console.command.annotations.CommandArgument
 import eu.thesimplecloud.launcher.console.command.annotations.CommandSubPath
 import eu.thesimplecloud.launcher.console.command.provider.ServiceCommandSuggestionProvider
+import eu.thesimplecloud.launcher.console.command.provider.WrapperCommandSuggestionProvider
 import eu.thesimplecloud.launcher.startup.Launcher
 import net.neverstopgaming.haste.util.haste
-import java.io.File
 import java.util.stream.Collectors
 
 @Command("haste", CommandType.CONSOLE_AND_INGAME, "cloud.haste", ["paste", "log"])
@@ -25,7 +25,7 @@ object HasteCommand : ICommandHandler {
             sender.sendMessage("&cYou must be a player to use this command!")
             return
         }
-        sender.getConnectedServer()?.let { haste(sender, it) }
+        sender.getConnectedServer()?.let { haste(sender, it.getName()) }
     }
 
     @CommandSubPath("<service>")
@@ -33,23 +33,30 @@ object HasteCommand : ICommandHandler {
         sender: ICommandSender,
         @CommandArgument("service", ServiceCommandSuggestionProvider::class) service: ICloudService
     ) {
-        haste(sender, service)
+        haste(sender, service.getName())
     }
 
-    private fun haste(sender: ICommandSender, service: ICloudService) {
+    @CommandSubPath("wrapper <wrapper>")
+    fun handle(
+        sender: ICommandSender,
+        @CommandArgument("wrapper", WrapperCommandSuggestionProvider::class) wrapper: String,
+    ) {
+        haste(sender, wrapper)
+    }
 
-        val screen = Launcher.instance.screenManager.getScreen(service.getName())
-        if(screen == null){
+    private fun haste(sender: ICommandSender, service: String) {
+
+        val screen = Launcher.instance.screenManager.getScreen(service)
+        if (screen == null) {
             sender.sendMessage("Service screen is null")
             return
         }
         val screenMessages = screen.getAllSavedMessages()
-        if(screenMessages.isEmpty()){
+        if (screenMessages.isEmpty()) {
             sender.sendMessage("Service screen is empty")
             return
         }
-
-        var msg = screenMessages.parallelStream().collect(Collectors.joining("\n"))
+        val msg = screenMessages.parallelStream().collect(Collectors.joining("\n"))
 
         val haste = msg.haste()
 

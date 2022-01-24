@@ -7,7 +7,7 @@ import net.neverstopgaming.haste.command.SupportCommand
 import net.neverstopgaming.haste.util.Updater
 
 const val pluginName = "SimpleCloud-Haste-Module"
-const val pluginVersion = "1.0"
+const val pluginVersion = "1.1"
 
 class HasteModule : ICloudModule {
 

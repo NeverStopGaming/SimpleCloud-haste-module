@@ -38,7 +38,7 @@ object Properties {
     val group = "net.neverstopgaming"
 
     @JvmStatic
-    val version = "1.0"
+    val version = "1.1"
 
     @JvmStatic
     val versions: MutableMap<String, String> = mutableMapOf<String, String>().also {
